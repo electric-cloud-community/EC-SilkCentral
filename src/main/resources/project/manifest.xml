@@ -1,0 +1,43 @@
+<?xml version='1.0' standalone='yes'?>
+<fileset>
+  <file>
+    <path>SilkCentralCreateConfigForm.xml</path>
+    <xpath>//property[propertyName=&quot;ui_forms&quot;]/propertySheet/property[propertyName=&quot;SilkCentralCreateConfigForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>SilkCentralEditConfigForm.xml</path>
+    <xpath>//property[propertyName=&quot;ui_forms&quot;]/propertySheet/property[propertyName=&quot;SilkCentralEditConfigForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/runSilkCentral.xml</path>
+    <xpath>//procedure[procedureName=&quot;runSilkCentral&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>preamble.pl</path>
+    <xpath>//property[propertyName=&quot;preamble&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>SilkCentral.pm</path>
+    <xpath>//property[propertyName=&quot;SilkCentral&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>conf/createcfg.pl</path>
+    <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/step[stepName=&quot;CreateConfiguration&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>conf/createAndAttachCredential.pl</path>
+    <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/step[stepName=&quot;CreateAndAttachCredential&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>conf/deletecfg.pl</path>
+    <xpath>//procedure[procedureName=&quot;DeleteConfiguration&quot;]/step[stepName=&quot;DeleteConfiguration&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>silkCentral/runTests.pl</path>
+    <xpath>//procedure[procedureName=&quot;runSilkCentral&quot;]/step[stepName=&quot;runTests&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>ec_setup.pl</path>
+    <xpath>//property[propertyName=&quot;ec_setup&quot;]/value</xpath>
+  </file>
+</fileset>

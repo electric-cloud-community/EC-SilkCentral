@@ -1,0 +1,29 @@
+##### Used for individual unit tests
+## Logon
+logonUser|3276
+
+## Get a list of projects
+getProjects|<project><description>test one</descritption><id>1<id><name>test1</name></project><project><description>test two</descritption><id>2<id><name>test2</name></project>
+
+## Get queue time
+queueExecution|1217573350123
+
+## Get execution URL
+getExecutionResultURL|http://mysilkserver/?execRunId=444
+
+## 
+getExecutionResult|<getExecutionResultReturn><duration>157</duration><type>Windows Scripting</type><testRunId>444</testRunId><name>test 2</name><status>2</status><warnings>3</warnings><errors>7</errors></getExecutionResultReturn>
+
+##### Used for end to end test using silkintegration
+## Logon
+logonUser|3276
+
+## Get queue time
+queueExecution|1217573350123
+
+## Get execution URL
+getExecutionResultURL|http://mysilkserver/
+getExecutionResultURL|http://mysilkserver/?execRunId=444
+
+## 
+getExecutionResult|<getExecutionResultReturn><duration>157</duration><type>Windows Scripting</type><testRunId>444</testRunId><name>test 2</name><status>2</status><warnings>3</warnings><errors>7</errors></getExecutionResultReturn>

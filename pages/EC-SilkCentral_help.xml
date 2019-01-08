@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="generator" content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
+    <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
+
+    <title>ElectricFlow Plugin for SilkCentral</title>
+    <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
+</head>
+
+<body>
+    <div class="help">
+        <h1 class="pluginname">SilkCentral</h1>
+
+        <p>Plugin Version @PLUGIN_VERSION@</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
+			
+			<p>July 1, 2015</p>
+
+        <p>SilkCentral is a powerful, software test management
+        solution for development projects.<br />
+         It provides tools to improve productivity, traceability
+        and visibility for all types of software testing.</p>
+
+        <h2>SilkCentral Links</h2>
+
+        <p>More information can be found at
+        <a href="http://www.borland.com/us/products/silk/silkcentral_test/index.aspx">
+        this website</a>.</p>
+
+        <h2>ElectricFlow Integration to SilkCentral</h2>
+
+        <p>The plugin executes SilkCentral test by a calling SOAP
+        webservice from a perl client and shows results after the
+        test have finished.</p>
+
+        <h2>Integrated Version</h2>
+
+        <p>This plugin was developed and tested against version
+        SilkCentral 2008</p>
+
+        <h1>Plugin Procedures</h1>
+
+        <p>IMPORTANT: For all parameter descriptions below,
+        required parameters are shown in
+        <span class="required">bold italics</span>.</p>
+
+        <h2>Plugin Configuration</h2>
+
+        <p>Plugin configurations are sets of parameters that apply
+        across some or all of the plugin's procedures. They are
+        intended to reduce repetition of common values, create
+        predefined sets of parameters for end users, and to
+        securely store credentials where needed. Each configuration
+        is given a unique name that is entered in designated
+        parameters on procedures that use them.<br />
+         Plugin configurations are created by going to the Electric
+        Commander "Administration" tab, then to the "Plugins"
+        sub-tab. On the right side of the line for the specific
+        plugin, there is a "Configure" link which will open the
+        Configuration page.</p>
+
+        <h3>Plugin Configuration Parameters</h3>
+
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="required">Configuration Name</td>
+
+                    <td>Provide a unique name for the
+                    configuration. (Required)</td>
+                </tr>
+
+                <tr>
+                    <td>Silk Central Url</td>
+
+                    <td>Url to your SilkCentral Server. (Required)</td>
+                </tr>
+
+                <tr>
+                    <td class="required">User Name</td>
+
+                    <td>Provide the user login ID. Remember that
+                    login IDs are case sensitive. (Required)</td>
+                </tr>
+
+                <tr>
+                    <td class="required">Password</td>
+
+                    <td>Provide the user-specified password.
+                    (Required)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="runSilkCentral">
+            <a name="runSilkCentral" id="runSilkCentral"></a> 
+
+            <h3>runSilkCentral</h3>
+
+            <p>The ExecuteSQL procedure executes SilkCentral test
+            from Commander</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Execution id</td>
+
+                        <td>Provide the numeric execution ID that
+                        identifies the test you want to run.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>The name of the configuration that
+                        contains the user and password to connect
+                        to the database server. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Version</td>
+
+                        <td>Provide the version number to pass to
+                        the test.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Build</td>
+
+                        <td>Provide the build number to pass to the
+                        test.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Resource</td>
+
+                        <td>Indicate the name of the
+                        ElectricFlow resource where the test
+                        will run.<br />
+                         If this field is blank, the SilkCentral
+                        server will be used.</td>
+                    </tr>
+
+                    <tr>
+                        <td>TimeLimit</td>
+
+                        <td>Indicate the timeout value for the
+                        step. Set this value to a number larger
+                        than the longest time you expect this test
+                        could possibly run.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Run in parallel</td>
+
+                        <td>If checked, this step runs in parallel
+                        with other steps, which will allow multiple
+                        tests to run concurrently.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Parameter
+            form</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-2.png" alt="screenshot" />
+        </div>
+
+        <h1>Examples and Use Cases</h1>
+
+        <h2>Creating a
+        configuration</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-1.png" alt="screenshot" /> 
+
+        <h2>parameter
+        form</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-2.png" alt="screenshot" /> 
+
+        <h1>Release Notes</h1>
+	<h2>@PLUGIN_KEY@ 1.0.5</h2>
+    <ul>
+        <li>Fixed issue with configurations being cached for IE.</li>
+    </ul>
+		
+		<h2>@PLUGIN_KEY@ 1.0.4</h2>
+
+		<ul>
+			<li>Renamed ElectricCommander to ElectricFlow.</li>
+		</ul>
+
+		<h2>@PLUGIN_KEY@ 1.0.3</h2>
+
+		<ul>
+			<li>Procedure name(s) were changed in the step picker section.</li>
+		</ul>
+		
+        <h2>@PLUGIN_KEY@ 1.0.2</h2>
+
+        <ul>
+            <li>XML parameter panels</li>
+
+            <li>Help page improvements</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+# -*-Perl-*-
+#
+# silkintegration.ntest -
+#
+# This file contains tests for the silkintegration script.  Is organized in the
+# standard fashion expected by "ntest".
+#
+# Copyright (c) 2006-2008 Electric Cloud, Inc.
+# All rights reserved
+
+createPrivateDirs 0;
+
+$ENV{"PERL5SHELL"} = "";
+#-------------------------------------------------------------------------
+# funcEval
+#
+#      This function is used for unit testing of individual functions
+#      in silkintegration.It arranges for an arbitrary Perl script to be evaluated
+#      in silkintegration right after argument processing.
+#
+# Results:
+#      The return value is a list with two elements consisting of the
+#      standard output from the silkintegration invocation and its standard error
+#
+# Side Effects:
+#      None, except for whatever silkintegration does.
+#
+# Arguments:
+#      script -           Perl script.
+#      options -          (Optional) String containing additional options
+#                         to include on silkintegration command line.
+#-------------------------------------------------------------------------
+
+sub funcEval($;$) {
+    my ($script, $options) = @_;
+
+    if (defined($options)) {
+        $options = " $options";
+    } else {
+        $options = "";
+    }
+    my $command = "\"$^X\" \"$::gTestOut/../classes/project/silkintegration.pl\"";
+
+    if ($script ne "") {
+        writeFile("_script", $script);
+        $command .= " --load _script";
+    }
+    $command .= "$options 2>_err";
+    my $out = `$command`;
+    my $err = readFile("_err");
+    unlink("_err");
+    unlink ("_script");
+    return ($out, $err);
+}
+
+ntest "silkintegration::setup_server", {}, sub {
+    # start fake server once for all tests
+    # this is a list, in order, of results expected
+    my $responses = $::gTestFileDir . "/soap_responses";
+    fakeSOAP ( $responses );
+    my $fileexists = 0;
+    if ( -f "info-ntest-soap.log" ) {
+        $fileexists = 1;
+    } else {
+        mesg("TEST", "server did not create a file info-ntest-soap.log\n");
+    }
+    assertDiff('1',"$fileexists");
+};
+
+
+ntest "silkperl::logonUser", {}, sub {
+    my $server = 'tcp://127.0.0.1:' . $::gAuxPort;
+    my $cmd = q{
+        my $ec = new ElectricCommander();
+        $ec->abortOnError(0);
+        my $opts;
+        $opts->{silkCentral_url} = "} . $server.q{";
+        my $gt = new SilkCentral($ec, $opts); 
+        $gt->Initialize("sccsystem");
+      
+      my %result = $gt->CallSilkCentral("logonUser",
+            ( "username" => "user", "password"=> "pass"  ) );
+         
+         if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+     my $sessionId =  $result{"value"} ;
+    print "Logon sessionId=" . $sessionId . "\n";
+        exit();
+    };
+    my ($out, $err) = funcEval($cmd , "");
+    assertDiff('', $err);
+    assertDiff("Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/sccsystem
+Logon sessionId=3276\n",$out);
+};
+
+ntest "silkperl::queueExecution", {}, sub {
+    my $server = "tcp://127.0.0.1:" . $::gAuxPort;
+    my $cmd = q{
+        my $ec = new ElectricCommander();
+        $ec->abortOnError(0);
+        my $opts;
+        $opts->{silkCentral_url} = "} . $server.q{";
+        my $gt = new SilkCentral($ec, $opts); 
+        $gt->Initialize("sccsystem");
+      
+      my %result = $gt->CallSilkCentral("logonUser",
+            ( "username" => "user", "password"=> "pass"  ) );
+         
+         if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+    
+    my $sessionId =  $result{"value"} ;
+   $gt->Initialize("tmplanning");
+
+    my %result = $gt->CallSilkCentral("queueExecution",
+            ( "sessionID" => "$sessionId" , "executionDefID" => "44" ,
+      "version" => "1.0", "build" => "testBuild",
+      "execServerHostName" => "otherHost", "execServerPort" => "2333",
+      "runProperties" => "") );
+   
+    if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+   
+    my $time =  $result{"value"} ;
+    print "Time=$time";
+        exit();
+    };
+    my ($out, $err) = funcEval($cmd , "");
+    assertDiff('', $err);
+    assertDiff("Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/sccsystem
+Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/tmplanning
+Time=1217573350123",$out);
+};
+
+ntest "silkperl::getExecutionResultURL", {}, sub {
+    my $server = "tcp://127.0.0.1:" . $::gAuxPort;
+    my $cmd = q{
+     my $ec = new ElectricCommander();
+        $ec->abortOnError(0);
+        my $opts;
+        $opts->{silkCentral_url} = "} . $server.q{";
+        my $gt = new SilkCentral($ec, $opts); 
+        $gt->Initialize("sccsystem");
+    
+    my %result = $gt->CallSilkCentral("logonUser",
+            ( "username" => "user", "password"=> "pass"  ) );
+         
+         if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+    
+    my $sessionId =  $result{"value"} ;
+   $gt->Initialize("tmplanning");
+   
+    my %result = $gt->CallSilkCentral("getExecutionResultURL",
+           ( "sessionID" => "$sessionId" , "executionDefID" => "44" ,
+      "executionTimestamp" => "121757335012", 
+      "execServerHostName" => "otherHost", "execServerPort" => "2333", ));
+    
+   # process errors
+    if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+        my $url =  $result{"value"} ;
+    print "URL=$url\n";
+        exit();
+    };
+    my ($out, $err) = funcEval($cmd , "");
+    assertDiff('', $err);
+    assertDiff("Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/sccsystem
+Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/tmplanning
+URL=http://mysilkserver/?execRunId=444\n",$out);
+};
+
+
+ntest "silkperl::getExecutionResult", {}, sub {
+
+ my $server = "tcp://127.0.0.1:" . $::gAuxPort;
+    my $cmd = q{
+        my $ec = new ElectricCommander();
+        $ec->abortOnError(0);
+        my $opts;
+        $opts->{silkCentral_url} = "} . $server.q{";
+        my $gt = new SilkCentral($ec, $opts); 
+        $gt->Initialize("sccsystem");
+      
+      my %result = $gt->CallSilkCentral("logonUser",
+            ( "username" => "user", "password"=> "pass"  ) );
+         
+         if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+    
+    my $sessionId =  $result{"value"} ;
+   $gt->Initialize("tmplanning");
+
+    my %result = $gt->CallSilkCentral("getExecutionResult",
+           ( "sessionID" => "$sessionId" , "executionDefID" => "44" ,
+      "executionTimestamp" => "12175733501", 
+      "execServerHostName" => "otherHost", "execServerPort" => "2333",));
+
+# process errors
+    if ($result{"faultcode"}) {
+        print "Error: " . $result{"faultcode"} . " " 
+             . $result{"faultstring"} . " "
+             . $result{"faultdetail"} . "\n";
+            exit();
+         }
+    my @vals = @ { $result{"value"} };
+    print "\n================== Silk Test Results =====================\n\n";    
+    for (my $i=1; $i < @vals; $i++) {
+      print "Test Definition " . $i . " - \n";
+      print "    Name: " . @vals[$i]->{"name"} . "\n";
+      print "    Type: " . @vals[$i]->{"type"} . "\n";
+      print "    Run Id: " . @vals[$i]->{"testRunId"} . "\n";
+      print "    Duration: " . @vals[$i]->{"duration"} . "\n";
+      print "    Status: " . @vals[$i]->{"status"} . "\n";
+      if ( @vals[$i]->{"warnings"} > 0 ) {
+         print "    Warning: " .  @vals[$i]->{"warnings"} . "\n";
+      }
+      if ( @vals[$i]->{"errors"} > 0 ) {
+         print "    Error: " .  @vals[$i]->{"errors"} . "\n";
+      }
+    }
+    exit();
+    };
+    my ($out, $err) = funcEval($cmd , "");
+    assertDiff('', $err);
+    assertDiff(outdent("Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/sccsystem
+Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/tmplanning
+
+================== Silk Test Results =====================
+
+Test Definition 1 - 
+    Name: test 2
+    Type: Windows Scripting
+    Run Id: 444
+    Duration: 157
+    Status: 2
+    Warning: 3
+    Error: 7\n"),$out);
+};
+
+
+ntest "silkintegration::runtest", {}, sub {
+   
+   my $server = "tcp://127.0.0.1:" . $::gAuxPort;
+   
+   my $cmd = q{ 
+        my $ec = new ElectricCommander();
+        $ec->abortOnError(0);
+        my $opts;
+        $opts->{testExecutionId} = 444;
+        $opts->{version} = 3.1;
+        $opts->{build} = 200;
+        $opts->{silkCentral_user} = "admin";
+        $opts->{silkCentral_url} ="} . $server.q{";
+        $opts->{silkCentral_pass} = "fake";
+        my $gt = new SilkCentral($ec, $opts); 
+        $gt->runSilkTest(); 
+        exit();
+    };
+   
+    my ($out, $err) = funcEval($cmd , "");
+   assertDiff('', $err);
+   
+
+    assertDiff(outdent("Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/sccsystem
+Silk Test Execution Id:444
+Silk Test Version:3.1
+Silk Test Build Number:200
+Silk Test Build Resource:localhost
+Silk Central Session ID:3276
+Initialize server proxy=tcp://127.0.0.1:$::gAuxPort/services/tmplanning
+Silk Central Execution Timestamp: 1217573350123
+Silk Test Execution Result URL: http://mysilkserver/?execRunId=444
+
+================== Silk Test Results =====================
+
+Test Definition 1 - 
+    Name: test 2
+    Type: Windows Scripting
+    Run Id: 444
+    Duration: 157
+    Status: 2
+    Warning: 3
+    Error: 7\n"),$out);
+   
+};
+
+ntest "silkperl::cleanup", {}, sub {
+    soapServerDown();
+};

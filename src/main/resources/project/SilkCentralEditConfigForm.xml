@@ -1,0 +1,17 @@
+<editor>
+    <formElement>
+        <type>entry</type>
+        <label>Silk Central Url:</label>
+        <property>silkCentral_url</property>
+        <value></value>
+        <documentation>Url of SilkCentral server</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>credential</type>
+        <label>Login as:</label>
+        <property>credential</property>
+        <value></value>
+        <required>0</required>
+    </formElement>
+</editor>

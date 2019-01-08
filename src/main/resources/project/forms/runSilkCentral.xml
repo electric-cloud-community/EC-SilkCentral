@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#runSilkCentral</help>
+    <formElement>
+        <label>Execution id</label>
+        <property>testExecutionId</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>Configuration name</label>
+        <property>configName</property>
+        <value></value>
+        <documentation></documentation>
+        <required>1</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>Version</label>
+        <property>version</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>Build</label>
+        <property>build</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>Resource</label>
+        <property>resource</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>TimeLimit</label>
+        <property>timeLimit</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <label>Run in parallel</label>
+        <property>runParallel</property>
+        <value></value>
+        <documentation></documentation>
+        <required>0</required>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+    </formElement>
+</editor>

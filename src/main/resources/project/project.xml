@@ -6,6 +6,12 @@
         <description>Integration with Silk Central</description>
         <workspaceName></workspaceName>
         <propertySheet>
+            <!-- Improvement for ECPTESTSILKCENTRAL-3 -->
+            <property>
+                <propertyName>ec_icon</propertyName>
+                <value>images/icon-plugin.svg</value>
+            </property>
+            <!-- End of improvement for ECPTESTSILKCENTRAL-3 -->
             <property>
                 <propertyName>silkCentral_driver</propertyName>
                 <description>Home for perl code</description>
@@ -132,7 +138,7 @@
                                             <value>standard</value>
                                         </property>
                                     </propertySheet>
-                                </property> 
+                                </property>
                                 <property>
                                     <propertyName>runParallel</propertyName>
                                     <propertySheet>

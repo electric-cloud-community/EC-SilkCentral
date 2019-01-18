@@ -15,8 +15,8 @@
 
         <p>Plugin Version @PLUGIN_VERSION@</p>
         <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-			
-			<p>July 1, 2015</p>
+
+        <p>Revised on January 14, 2019</p>
 
         <p>SilkCentral is a powerful, software test management
         solution for development projects.<br />
@@ -103,7 +103,7 @@
         </table>
 
         <div id="runSilkCentral">
-            <a name="runSilkCentral" id="runSilkCentral"></a> 
+            <a name="runSilkCentral" id="runSilkCentral"></a>
 
             <h3>runSilkCentral</h3>
 
@@ -186,29 +186,33 @@
         <h1>Examples and Use Cases</h1>
 
         <h2>Creating a
-        configuration</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-1.png" alt="screenshot" /> 
+        configuration</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-1.png" alt="screenshot" />
 
         <h2>parameter
-        form</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-2.png" alt="screenshot" /> 
+        form</h2><img src="../../plugins/@PLUGIN_KEY@/images/SilkCentral-2.png" alt="screenshot" />
 
         <h1>Release Notes</h1>
-	<h2>@PLUGIN_KEY@ 1.0.5</h2>
+    <h2>@PLUGIN_KEY@ 1.0.6</h2>
+    <ul>
+        <li>The plugin icon has been updated.</li>
+    </ul>
+    <h2>@PLUGIN_KEY@ 1.0.5</h2>
     <ul>
         <li>Fixed issue with configurations being cached for IE.</li>
     </ul>
-		
-		<h2>@PLUGIN_KEY@ 1.0.4</h2>
 
-		<ul>
-			<li>Renamed ElectricCommander to ElectricFlow.</li>
-		</ul>
+        <h2>@PLUGIN_KEY@ 1.0.4</h2>
 
-		<h2>@PLUGIN_KEY@ 1.0.3</h2>
+        <ul>
+            <li>Renamed ElectricCommander to ElectricFlow.</li>
+        </ul>
 
-		<ul>
-			<li>Procedure name(s) were changed in the step picker section.</li>
-		</ul>
-		
+        <h2>@PLUGIN_KEY@ 1.0.3</h2>
+
+        <ul>
+            <li>Procedure name(s) were changed in the step picker section.</li>
+        </ul>
+
         <h2>@PLUGIN_KEY@ 1.0.2</h2>
 
         <ul>

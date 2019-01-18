@@ -7,20 +7,20 @@
 // All rights reserved
 
 buildscript {
-	repositories {
-		maven { url 'http://dl.bintray.com/ecpluginsdev/maven' }
+    repositories {
+        maven { url 'http://dl.bintray.com/ecpluginsdev/maven' }
 
-		jcenter()
-	}
-	dependencies {
-//		classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '1.+'
-		classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '2.1'
-	}
+        jcenter()
+    }
+    dependencies {
+//      classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '1.+'
+        classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '2.1'
+    }
 }
 
 group = 'com.electriccloud'
 description = 'Plugins : EC-SilkCentral'
-version = '1.0.5'
+version = '1.0.6'
 
 apply plugin: 'flow-gradle-plugin'
 apply plugin: 'license'
@@ -28,26 +28,26 @@ apply plugin: 'license'
 license {
     header = file ('shortHeader.txt')
     exclude "**/project.xml"
-} 
+}
 
 dependencies {
-	testCompile 'junit:junit:[4,)'
-	testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'junit:junit:[4,)'
+    testCompile 'org.mockito:mockito-core:1.9.5'
 }
 
 test {
-	Properties props = new Properties()
+    Properties props = new Properties()
 
-	systemProperties['COMMANDER_SERVER'] = "$commanderServer"
-	systemProperties['PLUGIN_VERSION'] = version
-	//TODO: load properties for WebSphere
+    systemProperties['COMMANDER_SERVER'] = "$commanderServer"
+    systemProperties['PLUGIN_VERSION'] = version
+    //TODO: load properties for WebSphere
 
 
-	testLogging {
-		// Show that tests are run in the command-line output
-		events 'started', 'passed'
-		exceptionFormat = 'full'
-	}
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+        exceptionFormat = 'full'
+    }
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '2.14' }
